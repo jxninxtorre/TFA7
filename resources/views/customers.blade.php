@@ -1,31 +1,44 @@
-@extends('layouts.app')
+@extends('layouts.data')
 
-@section('title', 'Customer Accounts')
+@section('title', 'Customers')
 
 @section('content')
-    <div class="card">
-        <h1>Customer Accounts</h1>
-        <div class="table-wrap">
-            <table>
+    <div class="page-head">
+        <h1>Customers</h1>
+        <p>Customer records retrieved through the Customer Eloquent model.</p>
+    </div>
+
+    <div class="data-card">
+        <div class="data-card-head">
+            <h2>Customer Directory</h2>
+            <span class="count-badge">{{ $customers->count() }} records</span>
+        </div>
+        <div class="table-scroll">
+            <table class="data-table">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
+                        <th>Full Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>City</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($customers as $customer)
+                    @forelse ($customers as $customer)
                         <tr>
-                            <td>{{ $customer['id'] }}</td>
-                            <td>{{ $customer['name'] }}</td>
-                            <td>{{ $customer['email'] }}</td>
-                            <td>{{ $customer['phone'] }}</td>
-                            <td>{{ $customer['city'] }}</td>
+                            <td>{{ $customer->id }}</td>
+                            <td>
+                                <div class="person">
+                                    <div class="avatar">{{ strtoupper(substr($customer->full_name, 0, 1)) }}</div>
+                                    {{ $customer->full_name }}
+                                </div>
+                            </td>
+                            <td>{{ $customer->email }}</td>
+                            <td>{{ $customer->phone }}</td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr><td colspan="4" class="empty">No customers found.</td></tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
