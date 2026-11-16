@@ -2,9 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    protected $fillable = ['username', 'full_name'];
+    use HasFactory;
+
+    protected $fillable = ['username', 'full_name', 'avatar'];
+
+    public function getAvatarUrlAttribute(): string
+    {
+        return $this->avatar
+            ? asset('storage/' . $this->avatar)
+            : asset('images/placeholder.svg');
+    }
 }

@@ -5,12 +5,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('customers.index');
 });
 
-Route::view('/home', 'home');
-Route::view('/about', 'about');
-Route::view('/task', 'task');
-
-Route::get('/customers', [CustomerController::class, 'index']);
-Route::get('/users', [UserController::class, 'index']);
+Route::resource('customers', CustomerController::class)->except(['show', 'destroy']);
+Route::resource('users', UserController::class)->except(['show', 'destroy']);

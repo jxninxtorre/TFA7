@@ -1,44 +1,33 @@
-@extends('layouts.data')
+@extends('layouts.cafe')
 
-@section('title', 'Users')
+@section('title', 'User Accounts')
 
 @section('content')
-    <div class="page-head">
-        <h1>Users</h1>
-        <p>User accounts retrieved through the User Eloquent model.</p>
+    <div class="top-bar">
+        <h1>User Accounts</h1>
+        <a href="{{ route('users.create') }}" class="btn btn-pink">+ Add User</a>
     </div>
 
-    <div class="data-card">
-        <div class="data-card-head">
-            <h2>User Accounts</h2>
-            <span class="count-badge">{{ $users->count() }} records</span>
-        </div>
-        <div class="table-scroll">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Full Name</th>
-                        <th>Username</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($users as $user)
-                        <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>
-                                <div class="person">
-                                    <div class="avatar">{{ strtoupper(substr($user->full_name, 0, 1)) }}</div>
-                                    {{ $user->full_name }}
-                                </div>
-                            </td>
-                            <td><span class="tag">{{ $user->username }}</span></td>
-                        </tr>
-                    @empty
-                        <tr><td colspan="3" class="empty">No users found.</td></tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Avatar</th>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Full Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
+                <tr>
+                    <td><img src="{{ $user->avatar_url }}" alt="avatar" class="avatar"></td>
+                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->username }}</td>
+                    <td>{{ $user->full_name }}</td>
+                    <td><a href="{{ route('users.edit', $user) }}" class="btn">Edit</a></td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 @endsection

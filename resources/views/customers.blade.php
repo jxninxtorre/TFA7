@@ -1,46 +1,33 @@
-@extends('layouts.data')
+@extends('layouts.cafe')
 
 @section('title', 'Customers')
 
 @section('content')
-    <div class="page-head">
+    <div class="top-bar">
         <h1>Customers</h1>
-        <p>Customer records retrieved through the Customer Eloquent model.</p>
+        <a href="{{ route('customers.create') }}" class="btn btn-pink">+ Add Customer</a>
     </div>
 
-    <div class="data-card">
-        <div class="data-card-head">
-            <h2>Customer Directory</h2>
-            <span class="count-badge">{{ $customers->count() }} records</span>
-        </div>
-        <div class="table-scroll">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($customers as $customer)
-                        <tr>
-                            <td>{{ $customer->id }}</td>
-                            <td>
-                                <div class="person">
-                                    <div class="avatar">{{ strtoupper(substr($customer->full_name, 0, 1)) }}</div>
-                                    {{ $customer->full_name }}
-                                </div>
-                            </td>
-                            <td>{{ $customer->email }}</td>
-                            <td>{{ $customer->phone }}</td>
-                        </tr>
-                    @empty
-                        <tr><td colspan="4" class="empty">No customers found.</td></tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($customers as $customer)
+                <tr>
+                    <td>{{ $customer->id }}</td>
+                    <td>{{ $customer->full_name }}</td>
+                    <td>{{ $customer->email }}</td>
+                    <td>{{ $customer->phone }}</td>
+                    <td><a href="{{ route('customers.edit', $customer) }}" class="btn">Edit</a></td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 @endsection
